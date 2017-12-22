@@ -1,0 +1,25 @@
+{
+  "name": "homeassistant-proxy",
+  "version": "0.1.0",
+  "description": "Transparent proxy for keeping homeassistant somewhat locked down",
+  "main": "index.coffee",
+  "scripts": {
+    "start": "coffee app.coffee --nodejs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesoberstadt/node-homeassistant-proxy.git"
+  },
+  "author": "Miles Oberstadt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milesoberstadt/node-homeassistant-proxy/issues"
+  },
+  "homepage": "https://github.com/milesoberstadt/node-homeassistant-proxy#readme",
+  "dependencies": {
+    "coffee-script": "^1.12.7",
+    "express": "^4.16.2",
+    "express-http-proxy": "^1.1.0"
+  }
+}
