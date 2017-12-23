@@ -56,4 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
-
+# These are config files too
+allowed
+blocked
