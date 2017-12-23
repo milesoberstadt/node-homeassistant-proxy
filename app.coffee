@@ -1,6 +1,7 @@
 express = require 'express'
 proxy = require 'express-http-proxy'
 fs = require 'fs'
+helmet = require 'helmet'
 app = express()
 require('dotenv').config()
 
@@ -12,6 +13,9 @@ out_port = process.env.HA_PORT || 8123
 forward_host = process.env.HA_HOST || localhost
 forward_ui = is_true process.env.FORWARD_UI
 forward_api = is_true process.env.FORWARD_API
+
+# Add basic hardening
+app.use helmet()
 
 # Load the white and black lists
 try
