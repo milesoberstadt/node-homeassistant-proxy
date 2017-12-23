@@ -5,7 +5,7 @@ Problem: I have some HomeAssistant API endpoints I want exposed to the internet 
 
 Solution: This project makes a transparent proxy that routes the endpoints I need, adds SSL encryption, and doesn't mess with my HomeAssistant config.
 
-# Setup Instructions
+## Setup Instructions
 
 - Create a .env file with the following contents (change as needed)
 ```
@@ -19,12 +19,15 @@ FORWARD_API=TRUE    # Tells the proxy if it should forward all requests to the /
 - (Optional) Create `allowed` and `blocked` files.
 These files should have URL paths for locations you want to block/allow access to. These should be one URL per line.
 For example, if you want to access only the cover status in HomeAssistant, you could add
-`/api/services/cover` to the allowed file, and set the FORWARD_API variable in the .env file to FALSE.
+`/api/services/cover`
+to the allowed file, and set the FORWARD_API variable in the .env file to FALSE.
 
 - Run `npm i` to install all project dependencies.
 
 - Run `npm start`. If there are no issues, the console should show "Proxy is running!"
 
 TODO: Add instructions for creating service.
+
 TODO: Let allow and block files allow Regex
+
 TODO: Add support for HTTPS
