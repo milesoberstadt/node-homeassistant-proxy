@@ -9,11 +9,16 @@ Solution: This project makes a transparent proxy that routes the endpoints I nee
 
 - Create a .env file with the following contents (change as needed)
 ```
-PROXY_PORT=3000     # The port you are exposing with port forwarding
-HA_PORT=8123        # The actual HomeAssistant server port (default is 8123)
-HA_HOST=localhost   # The host IP running HomeAssistant, this setup assumes you're running it on the same machine
-FORWARD_UI=FALSE    # Tells the proxy if it should forward all requests to the UI. Set to true if you want the world to see your HomeAssistant web interface (good luck with that)
-FORWARD_API=TRUE    # Tells the proxy if it should forward all requests to the /api endpoints.
+# The port you are exposing with port forwarding
+PROXY_PORT=3000
+# The actual HomeAssistant server port (default is 8123)
+HA_PORT=8123
+# The host IP running HomeAssistant, this setup assumes you're running it on the same machine
+HA_HOST=localhost
+# Tells the proxy if it should forward all requests to the UI. Set to true if you want the world to see your HomeAssistant web interface (good luck with that)
+FORWARD_UI=FALSE
+# Tells the proxy if it should forward all requests to the /api endpoints. 
+FORWARD_API=TRUE
 ```
 
 - (Optional) Create `allowed` and `blocked` files.
