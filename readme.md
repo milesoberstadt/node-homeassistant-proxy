@@ -7,7 +7,16 @@ Solution: This project makes a transparent proxy that routes the endpoints I nee
 
 ## Setup Instructions
 
-- Create a .env file with the following contents (change as needed)
+### 1. Install Node.latest JS for your platform.
+I did this on a Raspberry Pi, so I needed to get the ARM installer. If you're using something else, you can go [here](https://nodejs.org/en/download/) to find the latest LTS for your platform. 
+
+Beware the Node version in your package manager (apt or yum), in my experience they are generally VERY out of date. 
+```
+wget http://node-arm.herokuapp.com/node_latest_armhf.deb 
+sudo dpkg -i node_latest_armhf.deb
+```
+
+### 2. Create a .env file with the following contents (change as needed)
 ```
 # The port you are exposing with port forwarding
 PROXY_PORT=3000
@@ -27,9 +36,30 @@ For example, if you want to access only the cover status in HomeAssistant, you c
 `/api/services/cover`
 to the allowed file, and set the FORWARD_API variable in the .env file to FALSE.
 
-- Run `npm i` to install all project dependencies.
+### 3. Install all project dependencies.
 
-- Run `npm start`. If there are no issues, the console should show "Proxy is running!"
+Open a temrminal and run this to install all the project dependenies in package.json
+
+`$ npm i`
+
+### 4. Verify that everything is working correctly.
+
+In the same terminal, run the following to make sure you can run the app correctly.
+
+`$ npm start`
+
+If there are no issues, the console should show "Proxy is running on port XXXX!" along with some debug information about which rules were loaded. You may also want to test your rules to make sure things work the way you want them to. You can quit with Ctrl+C. 
+
+### 5. Set up port forwarding on your router.
+
+I have no idea what router you have or how you should set this up. I set my forwarding to use the following:
+
+```
+Source Port: 8123
+Destination Port: 3000
+```
+
+This basically forwards port 8123 from the Internet, to your device on port 3000. This proxy software then routes the requests you approve from 3000 to their final destination at 8123.
 
 TODO: Add instructions for creating service.
 
