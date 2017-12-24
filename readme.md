@@ -39,18 +39,57 @@ to the allowed file, and set the FORWARD_API variable in the .env file to FALSE.
 ### 3. Install all project dependencies.
 
 Open a temrminal and run this to install all the project dependenies in package.json
-
-`$ npm i`
+```
+cd node-homeassistant-proxy
+npm i
+```
 
 ### 4. Verify that everything is working correctly.
 
 In the same terminal, run the following to make sure you can run the app correctly.
 
-`$ npm start`
+`npm start`
 
 If there are no issues, the console should show "Proxy is running on port XXXX!" along with some debug information about which rules were loaded. You may also want to test your rules to make sure things work the way you want them to. You can quit with Ctrl+C. 
 
-### 5. Set up port forwarding on your router.
+### 5. Setup node-homeassistant-proxy as a service
+
+We're going to set this up with PM2, a process manager for Node.JS applications. First, we install it with npm, the -g flag specifies that it will be available system-wide:
+
+`sudo npm install -g pm2 coffeescript`
+
+Now, let's add our app to PM2's process list:
+
+`pm2 start --interpreter coffee app.coffee --name "ha_proxy"`
+
+If everything went smoothly, you should get something like this:
+
+```
+[PM2] Applying action restartProcessId on app [ha_proxy](ids: 0)
+[PM2] [ha_proxy](0) ✓
+[PM2] Process successfully started
+┌──────────┬────┬──────┬──────┬────────┬─────────┬────────┬─────┬───────────┬──────┬──────────┐
+│ App name │ id │ mode │ pid  │ status │ restart │ uptime │ cpu │ mem       │ user │ watching │
+├──────────┼────┼──────┼──────┼────────┼─────────┼────────┼─────┼───────────┼──────┼──────────┤
+│ ha_proxy │ 0  │ fork │ 6432 │ online │ 0       │ 0s     │ 37% │ 11.7 MB   │ pi   │ disabled │
+└──────────┴────┴──────┴──────┴────────┴─────────┴────────┴─────┴───────────┴──────┴──────────┘
+```
+
+pm2 should keep this app running, but isn't currently setup to run at boot. To add pm2 to systemctl, execute the following:
+
+`pm2 startup systemd`
+
+That should yeild output simialar to this:
+
+```
+[PM2] Init System found: systemd
+[PM2] To setup the Startup Script, copy/paste the following command:
+sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+```
+
+Our last step is copying that last line and pasting it into the terminal to run it. Copy it from your terminal, not from above. This adds pm2 to the system PATH and adds the systemd entry for your current user. You can verify that this works by rebooting the machine and accessing your endpoints.
+
+### 6. Set up port forwarding on your router.
 
 I have no idea what router you have or how you should set this up. I set my forwarding to use the following:
 
@@ -59,10 +98,15 @@ Source Port: 8123
 Destination Port: 3000
 ```
 
-This basically forwards port 8123 from the Internet, to your device on port 3000. This proxy software then routes the requests you approve from 3000 to their final destination at 8123.
+This forwards port 8123 from the Internet, to your device on port 3000. This proxy software then routes the requests you approve from 3000 to their final destination at 8123.
 
-TODO: Add instructions for creating service.
 
-TODO: Let allow and block files allow Regex
+### References
+[How to Set Up a Node.js Application for Production](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
 
-TODO: Add support for HTTPS
+### TODO:
+~~Add instructions for creating service.~~
+
+Let allow and block files allow Regex
+
+Add support for HTTPS
